@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Results from "@/components/Results";
 
 export default async function SearchPage({ params }) {
@@ -16,6 +17,15 @@ export default async function SearchPage({ params }) {
   const data = await res.json();
 
   const results = data.results;
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SearchResults results={results} />
+    </Suspense>
+  );
+}
+
+function SearchResults({ results }) {
   return (
     <div>
       {results && results.length === 0 && (

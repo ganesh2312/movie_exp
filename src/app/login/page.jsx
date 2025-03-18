@@ -1,19 +1,20 @@
-'use client'
-import { useState } from 'react'
-import { signIn } from 'next-auth/react'
+'use client';
 
-export default function LoginPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+import { useState, Suspense } from 'react';
+import { signIn } from 'next-auth/react';
+
+function LoginForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     await signIn('credentials', { 
       email, 
       password,
       redirect: false
-    })
-  }
+    });
+  };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
@@ -43,5 +44,13 @@ export default function LoginPage() {
         </button>
       </form>
     </div>
-  )
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginForm />
+    </Suspense>
+  );
 }

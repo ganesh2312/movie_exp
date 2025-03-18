@@ -2,8 +2,10 @@
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { Suspense } from 'react'
 
-export default function SignupPage() {
+// SignupForm component
+function SignupForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const router = useRouter()
@@ -61,5 +63,14 @@ export default function SignupPage() {
         </button>
       </p>
     </div>
+  )
+}
+
+// SignupPage component
+export default function SignupPage() {
+  return (
+    <Suspense fallback={<div className="text-center">Loading signup form...</div>}>
+      <SignupForm />
+    </Suspense>
   )
 }
